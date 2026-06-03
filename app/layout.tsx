@@ -43,7 +43,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "zh_CN",
-    url: "https://imgtools.vercel.app",
+    url: "https://z24.homes",
     siteName: "ImgTools",
     title: "ImgTools - 免费在线图片处理工具箱",
     description: "免费在线图片处理，无需上传服务器，保护你的隐私。",
