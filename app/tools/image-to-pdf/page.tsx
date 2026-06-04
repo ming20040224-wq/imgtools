@@ -45,26 +45,26 @@ function ImageToPdfTab() {
     try {
       const sizes: Record<string, [number, number]> = { a4: [210, 297], letter: [216, 279] }
       const [pw, ph] = sizes[pageSize]
-      const pdf = new jsPDF({ unit: "mm", format: pageSize })
+      const margin = 10
+      const maxW = pw - margin * 2
+      const maxH = ph - margin * 2
+      const pdf = new jsPDF({ unit: "mm", format: pageSize, orientation: "portrait" })
 
       for (let i = 0; i < images.length; i++) {
         const img = await loadImage(images[i])
-        const canvas = document.createElement("canvas")
-        const maxW = pw - 10
-        const maxH = ph - 10
-        const scale = Math.min(maxW / (img.width / img.naturalWidth * 25.4 / img.width), maxH / (img.height / img.naturalHeight * 25.4 / img.height), 1)
-        canvas.width = img.naturalWidth
-        canvas.height = img.naturalHeight
-        canvas.getContext("2d")!.drawImage(img, 0, 0)
-        const dataUrl = canvas.toDataURL("image/jpeg", 0.92)
-
-        const imgW = (img.naturalWidth * 25.4) / 96 * scale
-        const imgH = (img.naturalHeight * 25.4) / 96 * scale
-        const x = (pw - imgW) / 2
-        const y = (ph - imgH) / 2
+        // Convert px to mm (96 DPI standard)
+        const imgWmm = (img.naturalWidth * 25.4) / 96
+        const imgHmm = (img.naturalHeight * 25.4) / 96
+        // Scale to fit page
+        const scale = Math.min(maxW / imgWmm, maxH / imgHmm, 1)
+        const drawW = imgWmm * scale
+        const drawH = imgHmm * scale
+        // Center on page
+        const x = (pw - drawW) / 2
+        const y = (ph - drawH) / 2
 
         if (i > 0) pdf.addPage()
-        pdf.addImage(dataUrl, "JPEG", x, y, imgW, imgH)
+        pdf.addImage(img, "JPEG", x, y, drawW, drawH, undefined, "FAST")
       }
 
       pdf.save("images.pdf")
@@ -179,27 +179,35 @@ function PdfToImageTab() {
 
     try {
       const { getDocument, GlobalWorkerOptions } = await import("pdfjs-dist")
-      GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/5.8.124/pdf.worker.min.mjs`
+      GlobalWorkerOptions.workerSrc = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/6.0.227/pdf.worker.min.mjs"
 
-      const arrayBuffer = await file.arrayBuffer()
-      const pdf = await getDocument({ data: arrayBuffer }).promise
+      // Use FileReader for better mobile compatibility
+      const data = await new Promise<ArrayBuffer>((resolve, reject) => {
+        const reader = new FileReader()
+        reader.onload = () => resolve(reader.result as ArrayBuffer)
+        reader.onerror = reject
+        reader.readAsArrayBuffer(file)
+      })
+
+      const pdf = await getDocument({ data }).promise
       const pageUrls: string[] = []
 
       for (let i = 1; i <= pdf.numPages; i++) {
         const page = await pdf.getPage(i)
-        const scale = 2
+        const scale = 1.5
         const viewport = page.getViewport({ scale })
         const canvas = document.createElement("canvas")
         canvas.width = viewport.width
         canvas.height = viewport.height
-        const ctx = canvas.getContext("2d")!
+        const ctx = canvas.getContext("2d")
+        if (!ctx) throw new Error("Canvas not supported")
         await page.render({ canvas, viewport }).promise
         pageUrls.push(canvas.toDataURL("image/jpeg", 0.92))
       }
 
       setPages(pageUrls)
     } catch (e) {
-      console.error(e)
+      console.error("PDF parse error:", e)
     } finally {
       setProcessing(false)
     }
@@ -226,7 +234,7 @@ function PdfToImageTab() {
               <span className="text-2xl mb-2">📑</span>
               <p className="text-sm font-medium">点击选择 PDF 文件</p>
               <p className="text-xs text-muted-foreground mt-1">PDF 将在浏览器本地解析，不传输到服务器</p>
-              <input ref={fileRef} type="file" accept=".pdf" onChange={handlePdf} className="hidden" />
+              <input ref={fileRef} type="file" accept="application/pdf,.pdf" onChange={handlePdf} className="hidden" />
             </div>
           </CardContent>
         </Card>
