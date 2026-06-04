@@ -116,6 +116,19 @@ export const tools: Tool[] = [
     category: "advanced",
     categoryZh: "高级工具",
   },
+  {
+    id: "image-to-pdf",
+    name: "Image ↔ PDF",
+    nameZh: "图片转 PDF",
+    description: "Convert images to PDF and extract pages from PDF to images.",
+    descriptionZh: "图片合成为 PDF 文件，或将 PDF 每一页转成图片",
+    icon: "📄",
+    href: "/tools/image-to-pdf",
+    category: "image",
+    categoryZh: "基础工具",
+    badge: "New",
+    badgeZh: "新",
+  },
 ]
 
 export function getToolById(id: string): Tool | undefined {
