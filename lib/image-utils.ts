@@ -459,22 +459,26 @@ async function canvasToBlob(
         (b) => {
           if (b) return resolve(b)
           // toBlob returned null → fallback to dataURL
-          dataUrlToBlob(canvas, type, quality).then(resolve).catch(reject)
+          resolve(dataUrlToBlob(canvas, type, quality))
         },
         type,
         quality
       )
     } else {
       // No toBlob support → use dataURL
-      dataUrlToBlob(canvas, type, quality).then(resolve).catch(reject)
+      resolve(dataUrlToBlob(canvas, type, quality))
     }
   })
 }
 
-async function dataUrlToBlob(canvas: HTMLCanvasElement, type: string, quality: number): Promise<Blob> {
+function dataUrlToBlob(canvas: HTMLCanvasElement, type: string, quality: number): Blob {
   const dataUrl = canvas.toDataURL(type, quality)
-  const res = await fetch(dataUrl)
-  return res.blob()
+  const parts = dataUrl.split(",")
+  const mime = parts[0].match(/:(.*?);/)![1]
+  const bytes = atob(parts[1])
+  const arr = new Uint8Array(bytes.length)
+  for (let i = 0; i < bytes.length; i++) arr[i] = bytes.charCodeAt(i)
+  return new Blob([arr], { type: mime })
 }
 
 interface SizeLike {
