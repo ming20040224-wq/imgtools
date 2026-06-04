@@ -5,7 +5,7 @@ import { ToolLayout, DownloadButton } from "@/components/ToolLayout"
 import { ImageUploaderWithPreview } from "@/components/ImageUploader"
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { cropImage, formatFileSize } from "@/lib/image-utils"
+import { cropImage, formatFileSize, downloadBlob } from "@/lib/image-utils"
 import Cropper, { type Area } from "react-easy-crop"
 
 const PRESETS = [
@@ -56,12 +56,7 @@ export default function CropPage() {
 
   const handleDownload = () => {
     if (!processed) return
-    const url = URL.createObjectURL(processed)
-    const a = document.createElement("a")
-    a.href = url
-    a.download = `cropped_${file?.name ?? "image.jpg"}`
-    a.click()
-    URL.revokeObjectURL(url)
+    downloadBlob(processed, `cropped_${file?.name ?? "image.jpg"}`)
   }
 
   return (

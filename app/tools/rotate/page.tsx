@@ -6,7 +6,7 @@ import { ImageUploaderWithPreview } from "@/components/ImageUploader"
 import { ImagePreview } from "@/components/ImagePreview"
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { rotateImage, flipImage, formatFileSize } from "@/lib/image-utils"
+import { rotateImage, flipImage, formatFileSize, downloadBlob } from "@/lib/image-utils"
 
 export default function RotatePage() {
   const [file, setFile] = useState<File | null>(null)
@@ -43,12 +43,7 @@ export default function RotatePage() {
 
   const handleDownload = () => {
     if (!processed) return
-    const url = URL.createObjectURL(processed)
-    const a = document.createElement("a")
-    a.href = url
-    a.download = `rotated_${file?.name ?? "image.jpg"}`
-    a.click()
-    URL.revokeObjectURL(url)
+    downloadBlob(processed, `rotated_${file?.name ?? "image.jpg"}`)
   }
 
   return (

@@ -5,7 +5,7 @@ import { ToolLayout, DownloadButton } from "@/components/ToolLayout"
 import { ImageUploaderWithPreview } from "@/components/ImageUploader"
 import { ImagePreview } from "@/components/ImagePreview"
 import { Card, CardContent } from "@/components/ui/card"
-import { getFormatExtension, convertImage, formatFileSize } from "@/lib/image-utils"
+import { getFormatExtension, convertImage, formatFileSize, downloadBlob } from "@/lib/image-utils"
 import type { ImageFormat } from "@/lib/image-utils"
 
 const FORMATS: { value: ImageFormat; label: string; ext: string; desc: string }[] = [
@@ -36,13 +36,7 @@ export default function ConvertPage() {
 
   const handleDownload = () => {
     if (!processed || !file) return
-    const url = URL.createObjectURL(processed)
-    const a = document.createElement("a")
-    const ext = getFormatExtension(targetFormat)
-    a.href = url
-    a.download = `${file.name.replace(/\.[^.]+$/, "")}.${ext}`
-    a.click()
-    URL.revokeObjectURL(url)
+    downloadBlob(processed, `${file.name.replace(/\.[^.]+$/, "")}.${getFormatExtension(targetFormat)}`)
   }
 
   return (

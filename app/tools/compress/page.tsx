@@ -6,7 +6,7 @@ import { ImageUploaderWithPreview } from "@/components/ImageUploader"
 import { ImagePreview } from "@/components/ImagePreview"
 import { Slider } from "@/components/ui/slider"
 import { Card, CardContent } from "@/components/ui/card"
-import { compressImage, compressImages, formatFileSize, getFileSizeKB } from "@/lib/image-utils"
+import { compressImage, compressImages, formatFileSize, getFileSizeKB, downloadBlob } from "@/lib/image-utils"
 import type { Metadata } from "next"
 
 export default function CompressPage() {
@@ -45,12 +45,7 @@ export default function CompressPage() {
   }
 
   const handleDownload = (blob: Blob, name: string) => {
-    const url = URL.createObjectURL(blob)
-    const a = document.createElement("a")
-    a.href = url
-    a.download = `compressed_${name}`
-    a.click()
-    URL.revokeObjectURL(url)
+    downloadBlob(blob, `compressed_${name}`)
   }
 
   const totalBefore = files.reduce((s, f) => s + f.size, 0)

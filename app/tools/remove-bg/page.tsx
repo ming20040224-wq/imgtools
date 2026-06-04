@@ -6,7 +6,7 @@ import { ToolLayout, DownloadButton } from "@/components/ToolLayout"
 import { ImageUploaderWithPreview } from "@/components/ImageUploader"
 import { ImagePreview } from "@/components/ImagePreview"
 import { Card, CardContent } from "@/components/ui/card"
-import { formatFileSize } from "@/lib/image-utils"
+import { formatFileSize, downloadBlob } from "@/lib/image-utils"
 
 // Dynamic import to avoid SSR issues with WASM
 const RemoveBgTool = dynamic(() => import("./RemoveBgTool"), { ssr: false })
@@ -46,13 +46,7 @@ export default function RemoveBgPage() {
 
   const handleDownload = () => {
     if (!processed || !file) return
-    const url = URL.createObjectURL(processed)
-    const a = document.createElement("a")
-    a.href = url
-    const name = file.name.replace(/\.[^.]+$/, "")
-    a.download = `${name}_nobg.png`
-    a.click()
-    URL.revokeObjectURL(url)
+    downloadBlob(processed, `${file.name.replace(/\.[^.]+$/, "")}_nobg.png`)
   }
 
   return (

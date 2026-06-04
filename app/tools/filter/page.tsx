@@ -7,7 +7,7 @@ import { ImagePreview } from "@/components/ImagePreview"
 import { Card, CardContent } from "@/components/ui/card"
 import { Slider } from "@/components/ui/slider"
 import { Button } from "@/components/ui/button"
-import { applyFilters, formatFileSize } from "@/lib/image-utils"
+import { applyFilters, formatFileSize, downloadBlob } from "@/lib/image-utils"
 import type { FilterOptions } from "@/lib/image-utils"
 
 const DEFAULT_FILTERS: Required<Omit<FilterOptions, "sharpen">> & { sharpen: number } = {
@@ -43,12 +43,7 @@ export default function FilterPage() {
 
   const handleDownload = () => {
     if (!processed) return
-    const url = URL.createObjectURL(processed)
-    const a = document.createElement("a")
-    a.href = url
-    a.download = `filtered_${file?.name ?? "image.jpg"}`
-    a.click()
-    URL.revokeObjectURL(url)
+    downloadBlob(processed, `filtered_${file?.name ?? "image.jpg"}`)
   }
 
   const reset = () => setFilters(DEFAULT_FILTERS)

@@ -6,7 +6,7 @@ import { ImageUploaderWithPreview } from "@/components/ImageUploader"
 import { ImagePreview } from "@/components/ImagePreview"
 import { Card, CardContent } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
-import { resizeImage, formatFileSize } from "@/lib/image-utils"
+import { resizeImage, formatFileSize, downloadBlob } from "@/lib/image-utils"
 
 export default function ResizePage() {
   const [file, setFile] = useState<File | null>(null)
@@ -71,12 +71,7 @@ export default function ResizePage() {
 
   const handleDownload = () => {
     if (!processed || !file) return
-    const url = URL.createObjectURL(processed)
-    const a = document.createElement("a")
-    a.href = url
-    a.download = `resized_${file.name}`
-    a.click()
-    URL.revokeObjectURL(url)
+    downloadBlob(processed, `resized_${file.name}`)
   }
 
   return (

@@ -515,3 +515,34 @@ function sharpenImageData(
 function rgbToHex(r: number, g: number, b: number): string {
   return `#${((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1)}`
 }
+
+// ==================== Download Utility ====================
+
+/**
+ * Robustly download a Blob as a file.
+ * Works on desktop and mobile (iOS Safari, Android Chrome, etc.)
+ */
+export function downloadBlob(blob: Blob, filename: string) {
+  const url = URL.createObjectURL(blob)
+
+  // Mobile Safari / some mobile browsers need the element in the DOM
+  const a = document.createElement("a")
+  a.href = url
+  a.download = filename
+  a.style.display = "none"
+
+  document.body.appendChild(a)
+
+  try {
+    a.click()
+  } catch {
+    // Fallback: open in new tab
+    window.open(url, "_blank")
+  }
+
+  // Clean up
+  setTimeout(() => {
+    document.body.removeChild(a)
+    URL.revokeObjectURL(url)
+  }, 100)
+}

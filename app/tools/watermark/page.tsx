@@ -8,7 +8,7 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Slider } from "@/components/ui/slider"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { addTextWatermark, addImageWatermark, formatFileSize } from "@/lib/image-utils"
+import { addTextWatermark, addImageWatermark, formatFileSize, downloadBlob } from "@/lib/image-utils"
 
 type Position = "center" | "topLeft" | "topRight" | "bottomLeft" | "bottomRight"
 
@@ -75,12 +75,7 @@ export default function WatermarkPage() {
 
   const handleDownload = () => {
     if (!processed) return
-    const url = URL.createObjectURL(processed)
-    const a = document.createElement("a")
-    a.href = url
-    a.download = `watermarked_${file?.name ?? "image.jpg"}`
-    a.click()
-    URL.revokeObjectURL(url)
+    downloadBlob(processed, `watermarked_${file?.name ?? "image.jpg"}`)
   }
 
   return (
