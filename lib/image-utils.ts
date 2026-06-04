@@ -452,38 +452,29 @@ async function canvasToBlob(
   type: string,
   quality: number
 ): Promise<Blob> {
-  // iOS Safari sometimes fails with canvas.toBlob for large canvases
   return new Promise((resolve, reject) => {
-    if (!canvas.toBlob) {
-      // Fallback for ancient browsers without toBlob
-      try {
-        const dataUrl = canvas.toDataURL(type, quality)
-        const res = fetch(dataUrl).then((r) => r.blob())
-        resolve(res)
-      } catch (e) {
-        reject(e)
-      }
-      return
+    // Try toBlob first
+    if (typeof canvas.toBlob === "function") {
+      canvas.toBlob(
+        (b) => {
+          if (b) return resolve(b)
+          // toBlob returned null → fallback to dataURL
+          dataUrlToBlob(canvas, type, quality).then(resolve).catch(reject)
+        },
+        type,
+        quality
+      )
+    } else {
+      // No toBlob support → use dataURL
+      dataUrlToBlob(canvas, type, quality).then(resolve).catch(reject)
     }
-    canvas.toBlob(
-      (b) => {
-        if (b) resolve(b)
-        else {
-          // Fallback: try data URL conversion
-          try {
-            canvas.toDataURL(type, quality) // warm up
-            canvas.toBlob(
-              (b2) => (b2 ? resolve(b2) : reject(new Error("Canvas toBlob failed"))),
-              type,
-              quality
-            )
-          } catch {
-            reject(new Error("Canvas toBlob failed"))
-          }
-        }
-      },
-      type,
-      quality
+  })
+}
+
+async function dataUrlToBlob(canvas: HTMLCanvasElement, type: string, quality: number): Promise<Blob> {
+  const dataUrl = canvas.toDataURL(type, quality)
+  const res = await fetch(dataUrl)
+  return res.blob()
     )
   })
 }
