@@ -4,7 +4,7 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { useState } from "react"
 import { useTheme } from "@/components/ThemeProvider"
-import { LogoLetter } from "@/components/Logo"
+import Logo from "@/components/Logo"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 import {
@@ -33,7 +33,7 @@ export function Header() {
           href="/"
           className="flex items-center gap-2 font-bold text-xl tracking-tight"
         >
-          <LogoLetter className="w-9 h-9" />
+          <Logo className="w-9 h-9" />
           <span className="hidden sm:inline bg-gradient-to-r from-purple-600 to-purple-400 bg-clip-text text-transparent dark:from-purple-400 dark:to-purple-300">
             Pixelab
           </span>

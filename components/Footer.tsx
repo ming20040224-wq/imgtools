@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { LogoLetter } from "@/components/Logo"
+import Logo from "@/components/Logo"
 
 export function Footer() {
   return (
@@ -9,7 +9,7 @@ export function Footer() {
           {/* Brand */}
           <div>
             <div className="flex items-center gap-2 mb-3">
-              <LogoLetter className="w-8 h-8" />
+              <Logo className="w-8 h-8" />
               <span className="font-bold text-lg">Pixelab</span>
             </div>
             <p className="text-sm text-muted-foreground leading-relaxed">
