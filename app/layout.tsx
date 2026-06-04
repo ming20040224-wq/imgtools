@@ -51,12 +51,21 @@ export const metadata: Metadata = {
     url: "https://z24.homes",
     siteName: "Pixelab",
     title: "Pixelab - 免费在线图片处理工具箱",
-    description: "免费在线图片处理，无需上传服务器，保护你的隐私。",
+    description: "压缩 · 裁剪 · 格式转换 · AI去背景 · 加水印 · 滤镜 · 更多。所有处理在浏览器本地完成，隐私安全。",
+    images: [
+      {
+        url: "https://z24.homes/og-image.svg",
+        width: 1200,
+        height: 630,
+        alt: "Pixelab - 免费在线图片处理工具箱",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "Pixelab - 免费在线图片处理工具箱",
-    description: "免费在线图片处理，无需上传服务器，保护你的隐私。",
+    description: "压缩 · 裁剪 · 格式转换 · AI去背景 · 加水印 · 滤镜 · 更多。所有处理在浏览器本地完成，隐私安全。",
+    images: ["https://z24.homes/og-image.svg"],
   },
 }
 
