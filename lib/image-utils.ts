@@ -1,5 +1,12 @@
 import imageCompression from "browser-image-compression"
 
+// ==================== Mobile Detection ====================
+
+function isMobile(): boolean {
+  if (typeof navigator === "undefined") return false
+  return /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent)
+}
+
 // ==================== Compression ====================
 
 export interface CompressionOptions {
@@ -17,10 +24,11 @@ export async function compressImage(
     maxSizeMB: 1,
     maxWidthOrHeight: 1920,
     quality: 0.8,
-    useWebWorker: true,
+    // Disable Web Worker on mobile to avoid compatibility issues
+    useWebWorker: !isMobile(),
   }
   const merged = { ...defaultOptions, ...options }
-  return imageCompression(file, { ...merged, useWebWorker: merged.useWebWorker ?? true })
+  return imageCompression(file, { ...merged, useWebWorker: merged.useWebWorker ?? !isMobile() })
 }
 
 export async function compressImages(
@@ -444,11 +452,35 @@ async function canvasToBlob(
   type: string,
   quality: number
 ): Promise<Blob> {
+  // iOS Safari sometimes fails with canvas.toBlob for large canvases
   return new Promise((resolve, reject) => {
+    if (!canvas.toBlob) {
+      // Fallback for ancient browsers without toBlob
+      try {
+        const dataUrl = canvas.toDataURL(type, quality)
+        const res = fetch(dataUrl).then((r) => r.blob())
+        resolve(res)
+      } catch (e) {
+        reject(e)
+      }
+      return
+    }
     canvas.toBlob(
       (b) => {
         if (b) resolve(b)
-        else reject(new Error("Canvas toBlob failed"))
+        else {
+          // Fallback: try data URL conversion
+          try {
+            canvas.toDataURL(type, quality) // warm up
+            canvas.toBlob(
+              (b2) => (b2 ? resolve(b2) : reject(new Error("Canvas toBlob failed"))),
+              type,
+              quality
+            )
+          } catch {
+            reject(new Error("Canvas toBlob failed"))
+          }
+        }
       },
       type,
       quality
@@ -525,24 +557,24 @@ function rgbToHex(r: number, g: number, b: number): string {
 export function downloadBlob(blob: Blob, filename: string) {
   const url = URL.createObjectURL(blob)
 
-  // Mobile Safari / some mobile browsers need the element in the DOM
+  // Approach: insert anchor into DOM (required for iOS Safari)
   const a = document.createElement("a")
   a.href = url
   a.download = filename
   a.style.display = "none"
+  a.style.position = "fixed"
+  a.style.top = "0"
+  a.style.left = "0"
 
   document.body.appendChild(a)
 
-  try {
-    a.click()
-  } catch {
-    // Fallback: open in new tab
-    window.open(url, "_blank")
-  }
-
-  // Clean up
+  // Use setTimeout to ensure DOM insertion is complete
   setTimeout(() => {
-    document.body.removeChild(a)
-    URL.revokeObjectURL(url)
-  }, 100)
+    a.click()
+    // Keep element in DOM longer for mobile to process the click
+    setTimeout(() => {
+      if (a.parentNode) document.body.removeChild(a)
+      URL.revokeObjectURL(url)
+    }, 500)
+  }, 50)
 }
