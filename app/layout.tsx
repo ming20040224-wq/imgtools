@@ -23,6 +23,11 @@ export const metadata: Metadata = {
     default: "Pixelab - 免费在线图片处理工具箱",
     template: "%s | Pixelab",
   },
+  icons: {
+    icon: "/favicon.svg",
+    shortcut: "/favicon.svg",
+    apple: "/favicon.svg",
+  },
   description:
     "免费的在线图片处理工具箱，支持图片压缩、格式转换、裁剪、调整大小、加水印、AI去背景等。无需上传服务器，保护隐私安全。",
   keywords: [
