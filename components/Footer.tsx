@@ -11,7 +11,7 @@ export function Footer() {
               <span className="flex items-center justify-center w-8 h-8 rounded-lg bg-gradient-brand text-white text-sm">
                 🖼
               </span>
-              <span className="font-bold text-lg">ImgTools</span>
+              <span className="font-bold text-lg">Pixelab</span>
             </div>
             <p className="text-sm text-muted-foreground leading-relaxed">
               免费在线图片处理工具箱。所有处理都在你的浏览器中完成，不上传服务器，保护你的隐私。
@@ -64,7 +64,7 @@ export function Footer() {
         </div>
 
         <div className="mt-10 pt-6 border-t border-border/50 text-center text-sm text-muted-foreground">
-          <p>© {new Date().getFullYear()} ImgTools. All rights reserved. 图片处理在浏览器本地完成，保护你的隐私。</p>
+          <p>© {new Date().getFullYear()} Pixelab. All rights reserved. 图片处理在浏览器本地完成，保护你的隐私。</p>
         </div>
       </div>
     </footer>

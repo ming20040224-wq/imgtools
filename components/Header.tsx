@@ -36,7 +36,7 @@ export function Header() {
             🖼
           </span>
           <span className="hidden sm:inline bg-gradient-to-r from-purple-600 to-purple-400 bg-clip-text text-transparent dark:from-purple-400 dark:to-purple-300">
-            ImgTools
+            Pixelab
           </span>
         </Link>
 

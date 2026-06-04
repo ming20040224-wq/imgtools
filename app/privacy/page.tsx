@@ -16,7 +16,7 @@ export default function PrivacyPage() {
             <h2 className="text-xl font-semibold">1. 图片隐私</h2>
             <div className="text-muted-foreground leading-relaxed space-y-3">
               <p>
-                <strong>你的图片不会上传到任何服务器。</strong> ImgTools 的所有
+                <strong>你的图片不会上传到任何服务器。</strong> Pixelab 的所有
                 图片处理功能都在你的浏览器本地完成，使用 HTML5 Canvas API 和 WebAssembly
                 技术。
               </p>

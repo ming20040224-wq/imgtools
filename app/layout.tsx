@@ -20,8 +20,8 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "ImgTools - 免费在线图片处理工具箱",
-    template: "%s | ImgTools",
+    default: "Pixelab - 免费在线图片处理工具箱",
+    template: "%s | Pixelab",
   },
   description:
     "免费的在线图片处理工具箱，支持图片压缩、格式转换、裁剪、调整大小、加水印、AI去背景等。无需上传服务器，保护隐私安全。",
@@ -37,20 +37,20 @@ export const metadata: Metadata = {
     "compress",
     "convert",
   ],
-  authors: [{ name: "ImgTools" }],
-  creator: "ImgTools",
+  authors: [{ name: "Pixelab" }],
+  creator: "Pixelab",
   robots: { index: true, follow: true },
   openGraph: {
     type: "website",
     locale: "zh_CN",
     url: "https://z24.homes",
-    siteName: "ImgTools",
-    title: "ImgTools - 免费在线图片处理工具箱",
+    siteName: "Pixelab",
+    title: "Pixelab - 免费在线图片处理工具箱",
     description: "免费在线图片处理，无需上传服务器，保护你的隐私。",
   },
   twitter: {
     card: "summary_large_image",
-    title: "ImgTools - 免费在线图片处理工具箱",
+    title: "Pixelab - 免费在线图片处理工具箱",
     description: "免费在线图片处理，无需上传服务器，保护你的隐私。",
   },
 }
