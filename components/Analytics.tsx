@@ -2,12 +2,9 @@
 
 import Script from "next/script"
 
-const GA_ID = "G-XXXXXXXXXX" // 替换为你的 Google Analytics ID
+const GA_ID = "G-T1HV125FRF"
 
 export function Analytics() {
-  // Don't load analytics if GA_ID is not set
-  if (GA_ID === "G-XXXXXXXXXX") return null
-
   return (
     <>
       <Script
