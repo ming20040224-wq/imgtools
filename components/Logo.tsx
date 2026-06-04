@@ -109,7 +109,7 @@ export function LogoWave({ className }: LogoProps) {
   )
 }
 
-/** 默认：Aperture（推荐） */
+/** 默认：Cube */
 export default function Logo({ className }: LogoProps) {
-  return <LogoAperture className={className} />
+  return <LogoCube className={className} />
 }
