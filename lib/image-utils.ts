@@ -475,8 +475,6 @@ async function dataUrlToBlob(canvas: HTMLCanvasElement, type: string, quality: n
   const dataUrl = canvas.toDataURL(type, quality)
   const res = await fetch(dataUrl)
   return res.blob()
-    )
-  })
 }
 
 interface SizeLike {
