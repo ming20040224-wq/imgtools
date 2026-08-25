@@ -1,5 +1,4 @@
 import { Card, CardContent } from "@/components/ui/card"
-import Link from "next/link"
 
 export default function AboutPage() {
   return (
@@ -14,7 +13,7 @@ export default function AboutPage() {
       <div className="grid gap-8">
         <Card>
           <CardContent className="p-6 space-y-4">
-            <h2 className="text-xl font-semibold">🎯 我们的理念</h2>
+            <h2 className="text-xl font-semibold">我们的理念</h2>
             <div className="space-y-3 text-muted-foreground leading-relaxed">
               <p>
                 在当今数字时代，图片处理是每个人都会遇到的需求。但传统的图片处理
@@ -30,7 +29,7 @@ export default function AboutPage() {
 
         <Card>
           <CardContent className="p-6 space-y-4">
-            <h2 className="text-xl font-semibold">🔒 隐私优先</h2>
+            <h2 className="text-xl font-semibold">隐私优先</h2>
             <div className="space-y-3 text-muted-foreground leading-relaxed">
               <p>
                 我们非常重视你的隐私。所有图片处理都在你的浏览器本地完成——
@@ -48,7 +47,7 @@ export default function AboutPage() {
 
         <Card>
           <CardContent className="p-6 space-y-4">
-            <h2 className="text-xl font-semibold">🛠️ 功能介绍</h2>
+            <h2 className="text-xl font-semibold">核心功能</h2>
             <div className="space-y-3 text-muted-foreground leading-relaxed">
               <p>目前 Pixelab 提供以下功能：</p>
               <ul className="list-disc pl-5 space-y-1">
@@ -58,9 +57,6 @@ export default function AboutPage() {
                 <li><strong>调整大小</strong> — 按像素或百分比缩放</li>
                 <li><strong>图片加水印</strong> — 文字水印和图片水印</li>
                 <li><strong>AI 去背景</strong> — 智能移除图片背景</li>
-                <li><strong>图片滤镜</strong> — 亮度、对比度、饱和度等调整</li>
-                <li><strong>旋转翻转</strong> — 90°旋转和水平/垂直翻转</li>
-                <li><strong>取色器</strong> — 提取图片颜色生成调色板</li>
               </ul>
               <p>我们还在持续添加更多功能，敬请期待！</p>
             </div>
@@ -69,7 +65,7 @@ export default function AboutPage() {
 
         <Card>
           <CardContent className="p-6 space-y-4">
-            <h2 className="text-xl font-semibold">💰 完全免费</h2>
+            <h2 className="text-xl font-semibold">完全免费</h2>
             <div className="space-y-3 text-muted-foreground leading-relaxed">
               <p>
                 Pixelab 的所有工具完全免费使用，无隐藏收费，无使用次数限制。
@@ -83,13 +79,13 @@ export default function AboutPage() {
 
         <Card>
           <CardContent className="p-6 space-y-4">
-            <h2 className="text-xl font-semibold">📧 联系我们</h2>
+            <h2 className="text-xl font-semibold">联系我们</h2>
             <div className="text-muted-foreground leading-relaxed">
               <p>
                 如果你有任何建议、反馈或合作意向，欢迎通过以下方式联系我们：
               </p>
               <p className="mt-2">
-                📮 GitHub Issues:{" "}
+                GitHub Issues:{" "}
                 <a
                   href="https://github.com"
                   className="text-primary hover:underline"

@@ -15,7 +15,7 @@ export function ToolCard({ tool }: ToolCardProps) {
           <div className="flex flex-col gap-3">
             {/* Icon */}
             <div className="flex items-center justify-between">
-              <span className="text-3xl">{tool.icon}</span>
+              <span className="text-2xl" aria-hidden="true">{tool.icon}</span>
               {tool.badge && (
                 <Badge
                   variant="secondary"
@@ -39,8 +39,7 @@ export function ToolCard({ tool }: ToolCardProps) {
               {tool.descriptionZh}
             </p>
 
-            {/* Arrow on hover */}
-            <div className="flex items-center text-xs font-medium text-primary opacity-0 group-hover:opacity-100 transition-opacity">
+            <div className="flex items-center text-xs font-medium text-primary transition-opacity sm:opacity-0 sm:group-hover:opacity-100">
               开始使用
               <svg
                 width="14"

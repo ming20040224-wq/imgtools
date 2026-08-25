@@ -4,9 +4,6 @@ import { ToolCard } from "@/components/ToolCard"
 import { Badge } from "@/components/ui/badge"
 
 export default function Home() {
-  const basicTools = tools.filter((t) => t.category === "image")
-  const advancedTools = tools.filter((t) => t.category === "advanced")
-
   return (
     <div className="flex flex-col">
       {/* ======= Hero Section ======= */}
@@ -27,7 +24,7 @@ export default function Home() {
               variant="secondary"
               className="text-sm px-4 py-1.5 bg-primary/10 text-primary border-primary/20 rounded-full"
             >
-              ✨ 完全免费 · 无需注册 · 隐私安全
+              完全免费 · 无需注册 · 本地处理
             </Badge>
 
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-tight">
@@ -38,7 +35,7 @@ export default function Home() {
 
             <p className="text-lg sm:text-xl text-muted-foreground max-w-2xl leading-relaxed">
               所有处理都在你的浏览器中完成，图片不上传服务器。
-              支持压缩、格式转换、裁剪、加水印、AI 去背景等功能。
+              专注六项高频功能：压缩、格式转换、裁剪、调整尺寸、水印和 AI 去背景。
             </p>
 
             {/* CTA */}
@@ -102,37 +99,36 @@ export default function Home() {
       {/* ======= Basic Tools Section ======= */}
       <section id="basic-tools" className="py-16 sm:py-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6">
-          <div className="mb-10">
-            <h2 className="text-2xl sm:text-3xl font-bold tracking-tight">
-              🛠️ 基础图片工具
-            </h2>
-            <p className="mt-2 text-muted-foreground">
-              日常图片处理所需的核心功能，完全免费
-            </p>
+          <div className="mb-10 max-w-2xl">
+            <p className="text-sm font-medium text-primary">核心工具</p>
+            <h2 className="mt-2 text-2xl sm:text-3xl font-bold tracking-tight">从上传到下载，专注完成图片处理</h2>
+            <p className="mt-3 text-muted-foreground">每个工具都尽量只解决一个问题，减少选择成本，也让处理过程更轻快。</p>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-            {basicTools.map((tool) => (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {tools.map((tool) => (
               <ToolCard key={tool.id} tool={tool} />
             ))}
           </div>
         </div>
       </section>
 
-      {/* ======= Advanced Tools Section ======= */}
-      <section id="advanced-tools" className="py-16 sm:py-20 bg-muted/30">
+      <section className="py-16 sm:py-20 bg-muted/30">
         <div className="mx-auto max-w-7xl px-4 sm:px-6">
-          <div className="mb-10">
-            <h2 className="text-2xl sm:text-3xl font-bold tracking-tight">
-              🚀 高级工具
-            </h2>
-            <p className="mt-2 text-muted-foreground">
-              AI 驱动的智能图片处理功能
-            </p>
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-            {advancedTools.map((tool) => (
-              <ToolCard key={tool.id} tool={tool} />
-            ))}
+          <div className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
+            <div>
+              <p className="text-sm font-medium text-primary">简单且可控</p>
+              <h2 className="mt-2 text-2xl sm:text-3xl font-bold tracking-tight">三步完成，无需把图片交给别人</h2>
+              <p className="mt-3 text-muted-foreground leading-relaxed">选择工具、上传图片、下载结果。除首次使用 AI 去背景需下载模型外，图片处理都在当前设备的浏览器中完成。</p>
+            </div>
+            <ol className="grid gap-3 sm:grid-cols-3">
+              {[['01', '选择工具', '从最常见的处理需求开始。'], ['02', '上传图片', '支持拖拽、点击上传与批量处理。'], ['03', '下载结果', '确认效果后立即保存到设备。']].map(([number, title, desc]) => (
+                <li key={number} className="rounded-2xl border border-border/70 bg-background p-5">
+                  <span className="text-sm font-semibold text-primary">{number}</span>
+                  <h3 className="mt-6 font-semibold">{title}</h3>
+                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{desc}</p>
+                </li>
+              ))}
+            </ol>
           </div>
         </div>
       </section>
@@ -148,22 +144,18 @@ export default function Home() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
               {
-                icon: "🔒",
                 title: "隐私安全",
                 desc: "所有处理在浏览器本地完成，图片不会上传到任何服务器",
               },
               {
-                icon: "⚡",
                 title: "极速处理",
                 desc: "利用 Web Worker 多线程处理，大文件也能快速完成",
               },
               {
-                icon: "🎨",
                 title: "简洁美观",
                 desc: "精心设计的界面，无需学习即可上手使用",
               },
               {
-                icon: "📱",
                 title: "全平台适配",
                 desc: "支持桌面端和移动端，随时随地处理图片",
               },
@@ -172,7 +164,6 @@ export default function Home() {
                 key={feature.title}
                 className="flex flex-col items-center text-center p-6 rounded-2xl hover:bg-muted/50 transition-colors"
               >
-                <span className="text-4xl mb-4">{feature.icon}</span>
                 <h3 className="font-semibold text-lg mb-2">{feature.title}</h3>
                 <p className="text-sm text-muted-foreground leading-relaxed">
                   {feature.desc}

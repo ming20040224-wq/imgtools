@@ -1,6 +1,6 @@
 "use client"
 
-import { useCallback, useRef, useState, type DragEvent } from "react"
+import { useCallback, useEffect, useId, useRef, useState, type DragEvent, type KeyboardEvent } from "react"
 import { cn } from "@/lib/utils"
 import { isValidImage, formatFileSize } from "@/lib/image-utils"
 
@@ -20,6 +20,8 @@ export function ImageUploader({
   const [isDragging, setIsDragging] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const inputRef = useRef<HTMLInputElement>(null)
+  const inputId = useId()
+  const errorId = useId()
 
   const validateAndAccept = useCallback(
     (file: File) => {
@@ -69,6 +71,13 @@ export function ImageUploader({
     inputRef.current?.click()
   }
 
+  const handleKeyDown = (e: KeyboardEvent<HTMLLabelElement>) => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault()
+      handleClick()
+    }
+  }
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files
     if (files && files.length > 0) {
@@ -82,8 +91,12 @@ export function ImageUploader({
 
   return (
     <div className={className}>
-      <div
-        onClick={handleClick}
+      <label
+        htmlFor={inputId}
+        role="button"
+        tabIndex={0}
+        aria-describedby={error ? errorId : undefined}
+        onKeyDown={handleKeyDown}
         onDragEnter={handleDragEnter}
         onDragLeave={handleDragLeave}
         onDragOver={handleDragOver}
@@ -132,16 +145,17 @@ export function ImageUploader({
         </div>
 
         <input
+          id={inputId}
           ref={inputRef}
           type="file"
           accept={accept}
           onChange={handleChange}
-          className="hidden"
+          className="sr-only"
         />
-      </div>
+      </label>
 
       {error && (
-        <p className="mt-3 text-sm text-destructive text-center">{error}</p>
+        <p id={errorId} role="alert" className="mt-3 text-sm text-destructive text-center">{error}</p>
       )}
     </div>
   )
@@ -158,6 +172,10 @@ export function ImageUploaderWithPreview({
   className,
 }: ImageUploaderWithPreviewProps) {
   const [preview, setPreview] = useState<{ url: string; name: string; size: number } | null>(null)
+
+  useEffect(() => () => {
+    if (preview) URL.revokeObjectURL(preview.url)
+  }, [preview])
 
   const handleFile = useCallback(
     (file: File) => {
@@ -188,6 +206,7 @@ export function ImageUploaderWithPreview({
           </div>
           <button
             onClick={() => setPreview(null)}
+            aria-label="移除已上传的图片"
             className="text-muted-foreground hover:text-destructive transition-colors shrink-0 ml-2"
           >
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">

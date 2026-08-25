@@ -5,7 +5,6 @@ import { Toaster } from "@/components/ui/sonner"
 import { Header } from "@/components/Header"
 import { Footer } from "@/components/Footer"
 import { ThemeProvider } from "@/components/ThemeProvider"
-import { Analytics } from "@/components/Analytics"
 import "./globals.css"
 
 const geistSans = Geist({
@@ -51,7 +50,7 @@ export const metadata: Metadata = {
     url: "https://z24.homes",
     siteName: "Pixelab",
     title: "Pixelab - 免费在线图片处理工具箱",
-    description: "压缩 · 裁剪 · 格式转换 · AI去背景 · 加水印 · 滤镜 · 更多。所有处理在浏览器本地完成，隐私安全。",
+    description: "压缩 · 裁剪 · 格式转换 · AI去背景 · 加水印。所有处理在浏览器本地完成，隐私安全。",
     images: [
       {
         url: "https://z24.homes/og-image.svg",
@@ -64,7 +63,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Pixelab - 免费在线图片处理工具箱",
-    description: "压缩 · 裁剪 · 格式转换 · AI去背景 · 加水印 · 滤镜 · 更多。所有处理在浏览器本地完成，隐私安全。",
+    description: "压缩 · 裁剪 · 格式转换 · AI去背景 · 加水印。所有处理在浏览器本地完成，隐私安全。",
     images: ["https://z24.homes/og-image.svg"],
   },
 }
@@ -98,11 +97,11 @@ export default function RootLayout({
         />
       </head>
       <body className="min-h-full flex flex-col">
-        <Analytics />
         <ThemeProvider>
           <TooltipProvider delay={300}>
             <Header />
-            <main className="flex-1">{children}</main>
+            <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[60] focus:rounded-md focus:bg-background focus:px-4 focus:py-2 focus:shadow">跳至主要内容</a>
+            <main id="main-content" className="flex-1">{children}</main>
             <Footer />
             <Toaster position="top-center" richColors />
           </TooltipProvider>

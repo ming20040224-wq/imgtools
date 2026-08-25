@@ -32,17 +32,7 @@ export default function PrivacyPage() {
           <CardContent className="p-6 space-y-4">
             <h2 className="text-xl font-semibold">2. 数据收集</h2>
             <div className="text-muted-foreground leading-relaxed space-y-3">
-              <p>我们使用以下服务来了解网站使用情况：</p>
-              <ul className="list-disc pl-5 space-y-2">
-                <li>
-                  <strong>Google Analytics</strong> — 收集匿名的页面浏览数据（如
-                  访问量、页面停留时间、使用的工具类型等）。不包含任何个人信息或图片内容。
-                </li>
-                <li>
-                  <strong>Google AdSense</strong> — 展示个性化广告。Google 可能
-                  使用 Cookie 来提供更相关的广告。
-                </li>
-              </ul>
+              <p>当前版本不加载第三方访问统计或广告脚本。我们不会收集、上传或存储你的图片内容。</p>
             </div>
           </CardContent>
         </Card>
@@ -51,13 +41,11 @@ export default function PrivacyPage() {
           <CardContent className="p-6 space-y-4">
             <h2 className="text-xl font-semibold">3. Cookie</h2>
             <div className="text-muted-foreground leading-relaxed space-y-3">
-              <p>我们使用以下类型的 Cookie：</p>
+              <p>网站仅使用必要的本地存储：</p>
               <ul className="list-disc pl-5 space-y-2">
-                <li><strong>必要的 Cookie</strong> — 用于基本的网站功能（如主题偏好）</li>
-                <li><strong>分析 Cookie</strong> — 用于了解网站使用情况</li>
-                <li><strong>广告 Cookie</strong> — 用于提供个性化广告</li>
+                <li><strong>主题偏好</strong> — 在你的设备上记住明暗主题设置</li>
               </ul>
-              <p>你可以在浏览器设置中管理或禁用 Cookie。</p>
+              <p>你可以在浏览器设置中清除本地网站数据。</p>
             </div>
           </CardContent>
         </Card>

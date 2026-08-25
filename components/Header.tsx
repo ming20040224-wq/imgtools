@@ -15,8 +15,7 @@ import {
 
 const navItems = [
   { label: "首页", href: "/" },
-  { label: "基础工具", href: "/#basic-tools" },
-  { label: "高级工具", href: "/#advanced-tools" },
+  { label: "工具", href: "/#basic-tools" },
   { label: "关于", href: "/about" },
 ]
 
@@ -80,14 +79,12 @@ export function Header() {
 
           {/* Mobile Menu */}
           <Sheet open={open} onOpenChange={setOpen}>
-            <SheetTrigger className="md:hidden">
-              <Button variant="ghost" size="icon" className="rounded-full">
+            <SheetTrigger className="md:hidden" render={<Button variant="ghost" size="icon" className="rounded-full" aria-label="打开导航菜单" />}>
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <line x1="3" y1="6" x2="21" y2="6" />
                   <line x1="3" y1="12" x2="21" y2="12" />
                   <line x1="3" y1="18" x2="21" y2="18" />
                 </svg>
-              </Button>
             </SheetTrigger>
             <SheetContent side="right" className="w-[280px] pt-12">
               <nav className="flex flex-col gap-2">
